@@ -1,0 +1,121 @@
+{
+  "name": "formacion-angular",
+  "context": ".",
+  "dockerFile": "Dockerfile",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+  "workspaceFolder": "/workspace",
+  "appPort": [
+    // Front-end development (Angular server)
+    //"0.0.0.0:4200:4200"
+  ],
+  "postCreateCommand": [
+    "/bin/bash",
+    "-l",
+    "-c",
+    "export NODE_VERSION=lts/erbium; nvm install ${NODE_VERSION};"
+  ],
+  "extensions": [
+    // Docker support
+    "ms-azuretools.vscode-docker",
+    // GIT support
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    // History support
+    "xyz.local-history",
+    // Angular language service
+    "Angular.ng-template",
+    // TSLint
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    // Chrome debugger
+    "msjsdiag.debugger-for-chrome"
+  ],
+  "settings": {
+    "remote.extensionKind": {
+      // Force chrome debugger extension installation on container
+      "msjsdiag.debugger-for-chrome": [
+        "workspace"
+      ]
+    },
+    // Run interactive bash shell in VSCode integrated terminal
+    "terminal.integrated.shellArgs.linux": [
+      "-l"
+    ],
+    // Configure glob patterns for excluding files and folders.
+    "files.exclude": {
+      "**/.classpath": true,
+      "**/.project": true,
+      "**/.settings": true,
+      "**/.factorypath": true,
+      "**/.git": true,
+      "**/.gradle": true,
+      "**/.idea": true,
+      "**/.mvn": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/.DS_Store": true
+    },
+    // Configure glob patterns for excluding files and folders in searches. Inherits all glob patterns from the files.exclude setting.
+    "search.exclude": {
+      "**/node": true,
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/build": true,
+      "**/target": true,
+      "**/.vscode-server": true,
+      "**/.history": true
+    },
+    // Show control characters
+    "editor.renderControlCharacters": true,
+    // Do not use current file indentation
+    "editor.detectIndentation": false,
+    // Use 2 characters for tabs
+    "editor.tabSize": 2,
+    // Format code on paste
+    "editor.formatOnPaste": true,
+    // Format code on file save
+    "editor.formatOnSave": true,
+    // Format code while typing
+    "editor.formatOnType": true,
+    // Disable preview editor
+    "workbench.editor.enablePreview": false
+  },
+  "runArgs": [
+    // User NVM cache
+    "--mount",
+    "type=bind,source=${env:HOME}/.nvm/.cache,target=/opt/nvm/.cache",
+    // User ssh keys
+    "--mount",
+    "type=bind,source=${env:HOME}/.ssh,target=/home/user/.ssh",
+    // User GIT config
+    "--mount",
+    "type=bind,source=${env:HOME}/.gitconfig,target=/home/user/.gitconfig",
+    // Docker in Docker
+    "--mount",
+    "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
+    "--mount",
+    "type=bind,source=/usr/bin/docker,target=/home/user/.local/bin/docker",
+    // cut -d: -f3 < <(getent group docker)
+    "--group-add",
+    "1001",
+    // VSCode server cache
+    "--mount",
+    "type=bind,source=${localWorkspaceFolder}/.vscode-server/bin,target=/home/user/.vscode-server/bin",
+    "--mount",
+    "type=bind,source=${localWorkspaceFolder}/.vscode-server/extensions,target=/home/user/.vscode-server/extensions",
+    // X11 Unix-domain socket
+    "--mount",
+    "type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix",
+    "--env=DISPLAY=unix${localEnv:DISPLAY}",
+    // Allow shared memory to avoid RAM access failures and rendering glitches due to X extesnion MIT-SHM
+    "--ipc=host",
+    // The kernel requires SYS_ADMIN for Chrome sand-box
+    "--cap-add",
+    "SYS_ADMIN",
+    // $(id -u):$(id -g)
+    "-u",
+    "1000:1000",
+    // Timezone
+    "--env=TZ=Europe/Madrid"
+  ],
+  "overrideCommand": false
+}
