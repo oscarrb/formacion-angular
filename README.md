@@ -159,6 +159,8 @@ Una vez instalado podemos proceder a instalar las [extensiones](https://code.vis
     *  **.nvm/.cache**: Se usa para compartir las distribuciones descargadas de Node entre el host y el contenedor.
     *  **.npm/_cacache**:  Se usa para compartir la caché de paquetes de Node entre el host y el contenedor.
     *  **.ssh**: Se usa para compartir las credenciales ssh entre el host y el contenedor.
+
+* También debe existir el siguiente fichero en tu directorio **HOME** (si no existe, créalo):
     *  **.gitconfig**: Se usa para compartir la configuración de git entre el host y el contenedor.
 
 * Arranca el Visual Studio Code
