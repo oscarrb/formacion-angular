@@ -140,9 +140,9 @@ Una vez instalado podemos proceder a instalar las [extensiones](https://code.vis
 
 * Clona en local el proyecto
 
-`git clone http://gitlab.treelogic.local/formacion/angular/formacion-angular.git`
+`git clone https://github.com/rubensa/formacion-angular.git`
 
-> Si tienes configuradas tus [claves SSH en GitLab](https://docs.gitlab.com/ee/ssh/), lo cual es preferible, utiliza `git clone git@gitlab.treelogic.local:formacion/angular/formacion-angular.git` en su lugar.
+> Si tienes configuradas tus [claves SSH en GitHub](https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh), lo cual es preferible, utiliza `git clone git@github.com:rubensa/formacion-angular.gitt` en su lugar.
 
 * Sitúate en el directorio creado
 
