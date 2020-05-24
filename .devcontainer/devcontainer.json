@@ -6,7 +6,7 @@
   "workspaceFolder": "/workspace",
   "appPort": [
     // Front-end development (Angular server)
-    //"0.0.0.0:4200:4200"
+    "0.0.0.0:4200:4200"
   ],
   "postCreateCommand": [
     "/bin/bash",
@@ -82,38 +82,38 @@
   "runArgs": [
     // User NVM cache
     "--mount",
-    "type=bind,source=${env:HOME}/.nvm/.cache,target=/opt/nvm/.cache",
+    "type=bind,source=${localEnv:HOME}/.nvm/.cache,target=/opt/nvm/.cache",
     // User ssh keys
     "--mount",
-    "type=bind,source=${env:HOME}/.ssh,target=/home/user/.ssh",
+    "type=bind,source=${localEnv:HOME}/.ssh,target=/home/user/.ssh",
     // User GIT config
     "--mount",
-    "type=bind,source=${env:HOME}/.gitconfig,target=/home/user/.gitconfig",
+    "type=bind,source=${localEnv:HOME}/.gitconfig,target=/home/user/.gitconfig",
     // Docker in Docker
     "--mount",
     "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock",
     "--mount",
-    "type=bind,source=/usr/bin/docker,target=/home/user/.local/bin/docker",
+    "type=bind,source=/usr/local/bin/docker,target=/home/user/.local/bin/docker",
     // cut -d: -f3 < <(getent group docker)
-    "--group-add",
-    "1001",
+    //"--group-add",
+    //"20",
     // VSCode server cache
     "--mount",
     "type=bind,source=${localWorkspaceFolder}/.vscode-server/bin,target=/home/user/.vscode-server/bin",
     "--mount",
     "type=bind,source=${localWorkspaceFolder}/.vscode-server/extensions,target=/home/user/.vscode-server/extensions",
     // X11 Unix-domain socket
-    "--mount",
-    "type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix",
-    "--env=DISPLAY=unix${localEnv:DISPLAY}",
+    //"--mount",
+    //"type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix",
+    //"--env=DISPLAY=$(localEnv:hostname):0",
     // Allow shared memory to avoid RAM access failures and rendering glitches due to X extesnion MIT-SHM
     "--ipc=host",
     // The kernel requires SYS_ADMIN for Chrome sand-box
-    "--cap-add",
-    "SYS_ADMIN",
+    //"--cap-add",
+    //"SYS_ADMIN",
     // $(id -u):$(id -g)
     "-u",
-    "1000:1000",
+    "501:20",
     // Timezone
     "--env=TZ=Europe/Madrid"
   ],
